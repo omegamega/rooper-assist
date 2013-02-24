@@ -1,0 +1,1 @@
+Bakafire Party作のボードゲーム"惨劇RoopeR"の脚本家を支援するツールです
