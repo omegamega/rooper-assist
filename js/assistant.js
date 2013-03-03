@@ -82,12 +82,12 @@ role_number = {};
 	}
 	
 	// 事件チェック
-	for(var i=0;i<$('.day_selector').val();i++) {
+	for(var i=1;i<=$('.day_selector').val();i++) {
 		var iac = $('.accident_selector.day_' + i).val();
 		var iacs = $('.accident_criminal_selector.day_' + i).val();
 		if(iac == undefined || accidents[iac].effect.length == 0) continue;
 		
-		for(var j=i+1;j<$('.day_selector').val();j++) {
+		for(var j=i+1;j<=$('.day_selector').val();j++) {
 			var jac = $('.accident_selector.day_' + j).val();
 			var jacs = $('.accident_criminal_selector.day_' + j).val();
 			if(jac == undefined || accidents[jac].effect.length == 0) continue;
@@ -167,7 +167,10 @@ updateAccidentTable = function() {
 		$('.accident_selector').append('<option value=' + i + '>' + accidents[i].name + '</option>');
 	}
 	$('.accident_selector').change(updateAccidentEffect).change();
-	$('.accident_selector .accident_criminal_selector').change(updateRoleCount).change();
+	$('.accident_selector, .accident_criminal_selector').change(function(){
+		updateRoleCount();
+		encodeSenarioToUrl();
+	}).change();
 }
 
 updateRuleAdditional = function() {
@@ -176,10 +179,12 @@ updateRuleAdditional = function() {
 	$('.rule_x2_additional').html(decorateSkill(rule_x[$('.rule_x2_selector').val()].additional));
 }
 
+var CRIMINAL_SEPARATOR = ":";
+var GLOBAL_SEPARATOR = "_";
 decodeUrlParam = function() {
 	var str = location.search.split("?");
 	if(str.length < 2) {
-		return [];
+		return null;
 	}
 	
 	var params = str[1].split("&");
@@ -202,13 +207,37 @@ decodeUrlParam = function() {
 	}
 }
 
+encodeSenarioToUrl = function() {
+	var str = location.search.split("?");
+	var param = {
+		senario : $('input#senario_name').val(),
+		loop	: $('select.loop_selector').val(),
+		day		: $('select.day_selector').val(),
+		rule_y	: $('select.rule_y_selector').val(),
+		rule_x1	: $('select.rule_x1_selector').val(),
+		rule_x2 : $('select.rule_x2_selector').val(),
+	};
+	
+	var param_roles = [],param_accidents = [];
+	for(var i in npcs) {
+		param_roles.push($('select.role_selector.role_' + i).val());
+	}
+	for(var i=1;i<=$('select.day_selector').val();i++) {
+		param_accidents.push($('select.accident_selector.day_'+i).val()
+			+ CRIMINAL_SEPARATOR + $('select.accident_criminal_selector.day_'+i).val());
+	}
+	
+	param["roles"] = implode(GLOBAL_SEPARATOR, param_roles);
+	param["accidents"] = implode(GLOBAL_SEPARATOR, param_accidents);
+	
+	$('#assist_url').val(createUrlWithParam(location.href.split("?")[0] , param));
+}
+	
 var init = function() {
 	// ループ回数
 	for(var i=1;i<9;i++) {
 		$('.loop_selector,.day_selector').append('<option value=' + i + '>' + i + '</option>');
 	}
-	$('.loop_selector').val(4);
-	$('.day_selector').val(7);
 	
 	// ルールY
 	for(var i=0;i<rule_y.length;i++) {
@@ -227,48 +256,40 @@ var init = function() {
 	$('.rule_y_selector,.rule_x1_selector,.rule_x2_selector').change(updateRuleAdditional).change();
 	$('.rule_y_selector,.rule_x1_selector,.rule_x2_selector').change(updateRoleCount).change();
 	
+	$('input#senario_name').change(encodeSenarioToUrl);
+	
 	// ルールフォーカス処理
 	$('.focus_button').click(function(){
 		$('span.skill_writer, span.skill_turnend, span.skill_terminator').removeClass('skill_focused');
 		$('span.skill_' + $(this).val()).addClass('skill_focused');
 	});
 	
-	// 完了ボタン
-	var CRIMINAL_SEPARATOR = ":";
-	var GLOBAL_SEPARATOR = "_";
-	$('#complete_button').click(function(){
-		var str = location.search.split("?");
-		var param = {
-			loop	: $('select.loop_selector').val(),
-			day		: $('select.day_selector').val(),
-			rule_y	: $('select.rule_y_selector').val(),
-			rule_x1	: $('select.rule_x1_selector').val(),
-			rule_x2 : $('select.rule_x2_selector').val(),
-		};
-		
-		var param_roles = [],param_accidents = [];
-		for(var i in npcs) {
-			param_roles.push($('select.role_selector.role_' + i).val());
-		}
-		for(var i=1;i<=$('select.day_selector').val();i++) {
-			param_accidents.push($('select.accident_selector.day_'+i).val()
-				+ CRIMINAL_SEPARATOR + $('select.accident_criminal_selector.day_'+i).val());
-		}
-		
-		param["roles"] = implode(GLOBAL_SEPARATOR, param_roles);
-		param["accidents"] = implode(GLOBAL_SEPARATOR, param_accidents);
-		
-		$('#assist_url').val(createUrlWithParam(location.href.split("?")[0] , param));
+	// 編集/完了
+	$('#edit_button').click(function() {
+		$('.play_mode').hide();
+		$('.edit_mode').show();
+		$('select, #senario_name').attr('disabled',null);
+	}).click();
+
+	$('#complete_button').click(function(){		
+		$('.play_mode').show();
+		$('.edit_mode').hide();
+		$('select, #senario_name').attr('disabled','1');
 	});
+	
+	$('.loop_selector, .day_selector, .rule_y_selector, .rule_x1_selector, .rule_x2_selector'
+	 + ', .role_selector, .accident_selector, .accident_criminal_selector').change(encodeSenarioToUrl);
 	
 	// URLパラムを読む
 	var data = decodeUrlParam();
-	if(data) {
+	if(data != null) {
+		// シナリオデータっぽいなら復元する
 		$('select.loop_selector').val(data['loop']).change();
 		$('select.day_selector').val(data['day']).change();
 		$('select.rule_y_selector').val(data['rule_y']).change();
 		$('select.rule_x1_selector').val(data['rule_x1']).change();
 		$('select.rule_x2_selector').val(data['rule_x2']).change();
+		$('input#senario_name').val(data['senario']);
 		
 		var param_roles = String(data['roles']).split(GLOBAL_SEPARATOR);
 		var param_accidents = String(data['accidents']).split(GLOBAL_SEPARATOR);
@@ -280,7 +301,8 @@ var init = function() {
 			$('select.accident_selector.day_' + i).val(v[0]).change();
 			$('select.accident_criminal_selector.day_' + i).val(v[1]).change();
 		}
-		
+	}else{
+		$('.loop_selector').val(4);
+		$('.day_selector').val(7).change();
 	}
-	ddd = data;
 }

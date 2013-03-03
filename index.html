@@ -1,14 +1,11 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="initial-scale=1">
 	<script type="text/javascript" src="lib/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript" src="js/tragedyset.js"></script>
 	<script type="text/javascript" src="js/npc.js"></script>
-	<script type="text/javascript" src="js/assistant.js">
-	
-	
-	
-	</script>
+	<script type="text/javascript" src="js/assistant.js"></script>
 	</head>
 	<style>	
 		th						{background-color:#111;	color:#eee;}
@@ -16,6 +13,9 @@
 		th.name					{width:160px;}
 		th.additional 			{width:320px;}
 		th.number				{width:64px;}
+		th.auto					{width:auto;}
+		
+		.table					{width:100%;}
 		
 		tr.odd					{background-color:#eee;}
 		tr.even					{background-color:#fff;}
@@ -47,13 +47,15 @@
 			border-radius: 5px;
 		}
 	</style>
+	<title>惨劇AssistanT</title>
 <body>
 
-<table id="loop">
+<table id="loop" class="table">
 	<thead>
 		<tr>
 			<th class="label">ループ回数</th>
 			<th class="label">日数</th>
+			<th class="auto">シナリオ名</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -64,16 +66,19 @@
 			<td>
 				<select class="day_selector"></select>
 			</td>
+			<td>
+				<input type="input" width="100%" id="senario_name"/>
+			</td>
 		</tr>
 	</tbody>
 </table>
 
-<table id="rule_table">
+<table id="rule_table" class="table">
 	<thead>
 		<tr>
 			<th class="label">ルール</th>
 			<th class="name">ルール</th>
-			<th class="additional">追加ルール</th>
+			<th class="auto">追加ルール</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -112,32 +117,32 @@
 <p></p>
 
 
-<table id="role_table">
+<table id="role_table" class="table">
 	<thead>
 		<tr>
 			<th class="label">人物</th>
 			<th class="name">役職</th>
-			<th class="additional">追加ルール</th>
+			<th class="auto">追加ルール</th>
 		</tr>
 	</thead>
 	<tbody>
 	</tbody>
 </table>
 
-<table id="accident_table">
+<table id="accident_table" class="table">
 	<thead>
 		<tr>
 			<th class="number">日数</th>
 			<th class="label">事件</th>
 			<th class="name">犯人</th>
-			<th class="additional">事件効果</th>
+			<th class="auto">事件効果</th>
 		</tr>
 	</thead>
 	<tbody>
 	</tbody>
 </table>
 
-<div style="position:fixed; right:0px; bottom:0px; left:0x; top:0px;">
+<div style="position:fixed; right:0px; bottom:0px;">
 <div style="background-color:#fff;" id="control_panel">
 <table id="control_switch" class="control_menu">
 	<thead>
@@ -151,26 +156,32 @@
 		<tr>
 			<td>
 				<span class="edit_mode">
-					<button type="button" id="complete_button">完了</button>
+					<p><button type="button" id="complete_button">完了</button></p>
+					<p>
+					シナリオURL:
+					<input type="input" id="assist_url"/>
+					</p>
 				</span>
 				<span class="play_mode">
+					<p>
 					<button type="button" id="edit_button">編集</button>
-					<input type="input" id="assist_url"/>
+					</p>
 				</span>
 			</td>
 		</tr>
 		<tr>
 			<td>
 				<span class="play_mode">
-				<button type="button" class="focus_button" value="writer">脚本家能力</button>
-				<button type="button" class="focus_button" value="turnend">ターン終了時能力</button>
+				<button type="button" class="focus_button" value="writer">脚本家フェイズ能力</button>
+				<button type="button" class="focus_button" value="turnend">ターン終了フェイズ能力</button>
 				<button type="button" class="focus_button" value="terminator">敗北させる能力</button>
 				</span>
 			</td>
 		</tr>
 	</tbody>
 </table>
-<table id="role_notice" class="control_menu">
+
+<table id="role_notice" class="control_menu edit_mode">
 	<thead>
 		<tr>
 			<th class="label">通知</th>
@@ -180,6 +191,13 @@
 	</tbody>
 </table>
 </div>
+</div>
+
+<div style="height:160px; position:relative; width:50%;">
+	<div style="position:absolute; bottom:2em; font-size:50%;">
+	<p>作った人:（　゜ワ゜）ノ(@Omegamega)</p>
+	<p>惨劇RoopeRはBakaFire Partyさん作のボードゲームです</p>
+	</div>
 </div>
 
 
