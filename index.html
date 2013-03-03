@@ -1,18 +1,18 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta name="viewport" content="initial-scale=1">
+	<meta name="viewport" content="initial-scale=1;width=device-width;minimum-scale=0.5;">
 	<script type="text/javascript" src="lib/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript" src="js/tragedyset.js"></script>
 	<script type="text/javascript" src="js/npc.js"></script>
 	<script type="text/javascript" src="js/assistant.js"></script>
 	</head>
 	<style>	
+		td,th					{font-size:80%;}
 		th						{background-color:#111;	color:#eee;}
 		th.label				{width:120px;}
 		th.name					{width:160px;}
-		th.additional 			{width:320px;}
-		th.number				{width:64px;}
+		th.number				{width:32px;}
 		th.auto					{width:auto;}
 		
 		.table					{width:100%;}
@@ -76,7 +76,7 @@
 <table id="rule_table" class="table">
 	<thead>
 		<tr>
-			<th class="label">ルール</th>
+			<th class="label"></th>
 			<th class="name">ルール</th>
 			<th class="auto">追加ルール</th>
 		</tr>
@@ -134,7 +134,7 @@
 		<tr>
 			<th class="number">日数</th>
 			<th class="label">事件</th>
-			<th class="name">犯人</th>
+			<th class="label">犯人</th>
 			<th class="auto">事件効果</th>
 		</tr>
 	</thead>
