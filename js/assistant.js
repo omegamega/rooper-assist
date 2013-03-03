@@ -44,40 +44,40 @@ implode = function(glue, val) {
 // 役職の人数チェックをする
 updateRoleCount = function(){
 	// ルールX,Yから役職人数を算出
-	var role_number = {};
+role_number = {};
 	for(var i in roles) {
-		role_number[i] = 0;
+		role_number[roles[i].alias] = 0;
 	}
 	
 	function getRoleNum(rules,rule,role) {
 		return (rules[rule].roles[role] != undefined) ? rules[rule].roles[role] : 0;
 	}
 	for(var i in roles) {
-		role_number[i] +=
-			getRoleNum(rule_y, $('.rule_y_selector').val() ,i)
-			+ getRoleNum(rule_x, $('.rule_x1_selector').val() ,i)
-			+ getRoleNum(rule_x, $('.rule_x2_selector').val() ,i);
+		role_number[roles[i].alias] +=
+			getRoleNum(rule_y, $('.rule_y_selector').val() ,roles[i].alias)
+			+ getRoleNum(rule_x, $('.rule_x1_selector').val() ,roles[i].alias)
+			+ getRoleNum(rule_x, $('.rule_x2_selector').val() ,roles[i].alias);
 	}
 	
 	// TODO:上限付き役職チェック
 	
 	// 役職テーブルの状態を見て、過不足を算出する
 	for(var i in npcs) {
-		role_number[$('select.role_selector.role_' + i).val()]--;
+		role_number[roles[$('select.role_selector.role_' + i).val()].alias]--;
 	}
 	var notices = [];
 	
 	if($('.rule_x1_selector').val() == $('.rule_x2_selector').val()) {
 		notices.push("<span class=\"red\">ルールX1とX2が重複</span>");
 	}
-	for(var i in roles) {
+	for(var i in role_number) {
 		if(i == 'person') continue;
 		
 		if(role_number[i] > 0) {
-			notices.push("<span class=\"red\">" + roles[i].name + "</span>" + role_number[i] + "人不足");
+			notices.push("<span class=\"red\">" + roles[roles_reverse[i]].name + "</span>" + role_number[i] + "人不足");
 		}
 		if(role_number[i] < 0) {
-			notices.push("<span class=\"blue\">" + roles[i].name + "</span>" + (-role_number[i]) + "人過剰");
+			notices.push("<span class=\"blue\">" + roles[roles_reverse[i]].name + "</span>" + (-role_number[i]) + "人過剰");
 		}
 	}
 	
@@ -85,12 +85,12 @@ updateRoleCount = function(){
 	for(var i=0;i<$('.day_selector').val();i++) {
 		var iac = $('.accident_selector.day_' + i).val();
 		var iacs = $('.accident_criminal_selector.day_' + i).val();
-		if(iac == 'none') continue;
+		if(iac == undefined || accidents[iac].effect.length == 0) continue;
 		
 		for(var j=i+1;j<$('.day_selector').val();j++) {
 			var jac = $('.accident_selector.day_' + j).val();
 			var jacs = $('.accident_criminal_selector.day_' + j).val();
-			if(jac == 'none') continue;
+			if(jac == undefined || accidents[jac].effect.length == 0) continue;
 			
 			if(iacs == jacs) {
 				notices.push("<span class=\"red\">" + i + "日目と" + j + "日目の犯人が重複</span>");
@@ -98,7 +98,7 @@ updateRoleCount = function(){
 		}
 	}
 	
-	if(notices == []) {
+	if(notices.length == 0) {
 		notices = ['準備完了'];
 	}
 	$('#role_notice > tbody > tr').remove();
@@ -138,7 +138,7 @@ createRoleTable = function() {
 updateAccidentEffect = function() {
 	for(var i=1;i <= $('.day_selector').val();i++) {
 		$('.accident_effect.day_' + i).html(decorateSkill(accidents[$('.accident_selector.day_' + i).val()].effect));
-		if($('.accident_selector.day_' + i).val() == 'none') {
+		if(accidents[$('.accident_selector.day_' + i).val()].effect.length == 0) {
 			$('.accident_criminal_selector.day_' + i).hide();
 		}else{
 			$('.accident_criminal_selector.day_' + i).show();
@@ -182,17 +182,24 @@ decodeUrlParam = function() {
 		return [];
 	}
 	
-	var params = str[1].split(":");
-	var results = [];
+	var params = str[1].split("&");
+	var result = {};
+	var nodata = true;
 	for (var i = 0; i < params.length; i++) {
 		var v = params[i].split("=");
 		if(v.length < 2) {
-			results[decodeURI(v[0])] = "";
+			result[decodeURI(v[0])] = "";
+			nodata = false;
 		}else{
-			results[decodeURI(v[0])] = decodeURI(v[1]);
+			result[decodeURI(v[0])] = decodeURI(v[1]);
+			nodata = false;
 		}
 	}
-	return results;
+	if(nodata) {
+		return null;
+	}else{
+		return result;
+	}
 }
 
 var init = function() {
@@ -241,11 +248,11 @@ var init = function() {
 		
 		var param_roles = [],param_accidents = [];
 		for(var i in npcs) {
-			param_roles.push(roles[$('select.role_selector.role_boy').val()].alias);
+			param_roles.push($('select.role_selector.role_' + i).val());
 		}
 		for(var i=1;i<=$('select.day_selector').val();i++) {
-			param_accidents.push(accidents[$('select.accident_selector.day_'+i).val()].alias
-				+ CRIMINAL_SEPARATOR + npcs[$('select.accident_criminal_selector.day_'+i).val()].alias);
+			param_accidents.push($('select.accident_selector.day_'+i).val()
+				+ CRIMINAL_SEPARATOR + $('select.accident_criminal_selector.day_'+i).val());
 		}
 		
 		param["roles"] = implode(GLOBAL_SEPARATOR, param_roles);
@@ -255,19 +262,25 @@ var init = function() {
 	});
 	
 	// URLパラムを読む
-	/*
 	var data = decodeUrlParam();
-	if(data != []) {
-		$('select.loop_selector').val(data['loop']);
-		$('select.day_selector').val(data['day']);
-		$('select.rule_y_selector').val(data['rule_y']);
-		$('select.rule_x1_selector').val(data['rule_x1']);
-		$('select.rule_x2_selector').val(data['rule_x2']);
+	if(data) {
+		$('select.loop_selector').val(data['loop']).change();
+		$('select.day_selector').val(data['day']).change();
+		$('select.rule_y_selector').val(data['rule_y']).change();
+		$('select.rule_x1_selector').val(data['rule_x1']).change();
+		$('select.rule_x2_selector').val(data['rule_x2']).change();
 		
 		var param_roles = String(data['roles']).split(GLOBAL_SEPARATOR);
 		var param_accidents = String(data['accidents']).split(GLOBAL_SEPARATOR);
 		for(var i=0;i<param_roles.length;i++) {
-			$('select.role_selector')[i].val(
+			$('select.role_selector.role_' + i).val(param_roles[i]).change();
 		}
-	}*/
+		for(var i=1;i<=param_accidents.length;i++) {
+			var v = param_accidents[i-1].split(CRIMINAL_SEPARATOR);
+			$('select.accident_selector.day_' + i).val(v[0]).change();
+			$('select.accident_criminal_selector.day_' + i).val(v[1]).change();
+		}
+		
+	}
+	ddd = data;
 }

@@ -1,17 +1,17 @@
 
 var ROLE_LIMIT_NOLIMIT = 999;
 
-var roles = {
-	person			: {
+var roles = [
+	{
 		name 		: "パーソン",
-		alias		: "p",
+		alias		: "person",
 		skill		: [],
 		friendship	: 'normal',
 		limit		: ROLE_LIMIT_NOLIMIT,
 	},
-	keyperson		: {
+	{
 		name 		: "キーパーソン",
-		alias		: "kp",
+		alias		: "keyperson",
 		skill		: [
 				{
 					timing	: 'passive',
@@ -21,9 +21,9 @@ var roles = {
 		friendship	: 'normal',
 		limit		: ROLE_LIMIT_NOLIMIT,
 	},
-	killer			: {
+	{
 		name		: "キラー",
-		alias		: "kl",
+		alias		: "killer",
 		skill		: [
 				{
 					timing	: 'turnend',
@@ -37,9 +37,9 @@ var roles = {
 		friendship	: 'ignore',
 		limit		: ROLE_LIMIT_NOLIMIT,
 	},
-	kuromaku		: {
+	{
 		name		: "クロマク",
-		alias		: "kr",
+		alias		: "kuromaku",
 		skill		:　[
 				{
 					timing	: 'writer',
@@ -49,9 +49,9 @@ var roles = {
 		friendship	: 'ignore',
 		limit		: ROLE_LIMIT_NOLIMIT,
 	},
-	ansatsusya		: {
+	{
 		name		: "アンサツシャ",
-		alias		: "as",
+		alias		: "ansatsusya",
 		skill		:　[
 				{
 					timing	: 'turnend',
@@ -69,9 +69,9 @@ var roles = {
 		friendship	: 'ignore',
 		limit		: ROLE_LIMIT_NOLIMIT,
 	},
-	akuryoutuki		: {
+	{
 		name		: "アクリョウツキ",
-		alias		: "ak",
+		alias		: "akuryoutuki",
 		skill		:　[
 				{
 					timing	: 'passive',
@@ -85,16 +85,16 @@ var roles = {
 		friendship	: 'normal',
 		limit		: ROLE_LIMIT_NOLIMIT,
 	},
-	witch			: {
+	{
 		name		: "ウイッチ",
-		alias		: "wt",
+		alias		: "witch",
 		skill		:　[],
 		friendship	: 'reject',
 		limit		: ROLE_LIMIT_NOLIMIT,
 	},
-	friend			: {
+	{
 		name		: "フレンド",
-		alias		: "fr",
+		alias		: "friend",
 		skill		:　[
 				{
 					timing	: 'loopend',
@@ -108,9 +108,9 @@ var roles = {
 		friendship	: 'normal',
 		limit		: 2,
 	},
-	mainlovers		: {
+	{
 		name		: "メインラバーズ",
-		alias		: "ml",
+		alias		: "mainlovers",
 		skill		:　[
 				{
 					timing	: 'passive',
@@ -124,9 +124,9 @@ var roles = {
 		friendship	: 'normal',
 		limit		: ROLE_LIMIT_NOLIMIT,
 	},
-	lovers			: {
+	{
 		name		: "ラバーズ",
-		alias		: "lv",
+		alias		: "lovers",
 		skill		:　[
 				{
 					timing	: 'passive',
@@ -136,9 +136,9 @@ var roles = {
 		friendship	: 'normal',
 		limit		: ROLE_LIMIT_NOLIMIT,
 	},
-	serialkiller	: {
+	{
 		name		: "シリアルキラー",
-		alias		: "sk",
+		alias		: "serialkiller",
 		skill		:　[
 				{
 					timing	: 'turnend',
@@ -148,16 +148,16 @@ var roles = {
 		friendship	: 'normal',
 		limit		: ROLE_LIMIT_NOLIMIT,
 	},
-	minus			: {
+	{
 		name		: "マイナス",
-		alias		: "mn",
+		alias		: "minus",
 		skill		:　[],
 		friendship	: 'ignore',
 		limit		: ROLE_LIMIT_NOLIMIT,
 	},
-	missleader		: {
+	{
 		name		: "ミスリーダー",
-		alias		: "ms",
+		alias		: "missleader",
 		skill		:　[
 				{
 					timing	: 'writer',
@@ -167,7 +167,7 @@ var roles = {
 		friendship	: 'normal',
 		limit		: 1,
 	},
-};
+];
 
 var rule_y = [
 	{
@@ -302,15 +302,13 @@ var rule_x = [
 	},
 ];
 
-var accidents = {
-	none		: {
+var accidents = [
+	{
 		name	: "-",
-		alias	: "",
 		effect	: [],
 	},
-	murder		: {
+	{
 		name	: "殺人事件",
-		alias	: "sj",
 		effect	: [
 				{
 					timing	: '',
@@ -318,9 +316,8 @@ var accidents = {
 				},
 			],
 	},
-	pollution	: {
+	{
 		name	: "邪気の汚染",
-		alias	: "jo",
 		effect	: [
 				{
 					timing	: '',
@@ -328,9 +325,8 @@ var accidents = {
 				},
 			],
 	},
-	hospital	: {
+	{
 		name	: "病院の事件",
-		alias	: "by",
 		effect	: [
 				{
 					timing	: '',
@@ -342,9 +338,8 @@ var accidents = {
 				},
 			],
 	},
-	sucide		: {
+	{
 		name	: "自殺",
-		alias	: "js",
 		effect	: [
 				{
 					timing	: '',
@@ -352,9 +347,8 @@ var accidents = {
 				},
 			],
 	},
-	anxietygrow	: {
+	{
 		name	: "不安拡大",
-		alias	: "fa",
 		effect	: [
 				{
 					timing	: '',
@@ -362,9 +356,8 @@ var accidents = {
 				},
 			],
 	},
-	parting		: {
+	{
 		name	: "別離",
-		alias	: "br",
 		effect	: [
 				{
 					timing	: '',
@@ -372,9 +365,8 @@ var accidents = {
 				},
 			],
 	},
-	reveal		: {
+	{
 		name	: "暴露",
-		alias	: "bk",
 		effect	: [
 				{
 					timing	: '',
@@ -386,4 +378,12 @@ var accidents = {
 				},
 			],
 	},
-}
+];
+
+
+(function(){
+	roles_reverse = [];
+	for(var i in roles) {
+		roles_reverse[roles[i].alias] = i;
+	}
+})();
