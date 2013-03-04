@@ -4,12 +4,13 @@
 スムーズで、快適な惨劇を。
 
 
-Bakafire Party作のボードゲーム[惨劇RoopeR"](http://bakafire.main.jp/rooper/sr_top.htm)の脚本家を支援する非公式ウェブアプリです。
+BakaFire Party作のボードゲーム[惨劇RoopeR"](http://bakafire.main.jp/rooper/sr_top.htm)の脚本家を支援する非公式ウェブアプリです。
 このアプリとタブレット/PCで、シナリオの非公式シートを置き換えて使う目的で作られています。
+アプリのURLは[こちら](http://omegamega.github.com/rooper-assist/)
 
 
 # 利用シーン
-## シナリオを作る・共有する
+## シナリオを作る・共有する(エディット)
 
 * ウェブ上でシナリオ作成ができます
 	* ルールX,Yに基づいた、ある程度の役職チェック
@@ -18,7 +19,7 @@ Bakafire Party作のボードゲーム[惨劇RoopeR"](http://bakafire.main.jp/ro
 	* URLを伝えるだけで、相手とシナリオを共有できます
 
 
-## 脚本家としてシナリオをプレイする
+## 脚本家としてシナリオをプレイする(プレイ)
 
 
 * ノートPCやタブレットデバイス等で開くことで、印刷の手間なく非公開シートを用意できます
