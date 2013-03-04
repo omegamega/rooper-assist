@@ -12,6 +12,7 @@ decorateSkill = function(skills) {
 			tx = replaceAll(tx,"】","】</span>");
 			tx = replaceAll(tx,"[暗躍C]","<span class=\"bad_counter\">[暗躍C]</span>");
 			tx = replaceAll(tx,"[不安C]","<span class=\"anxiety_counter\">[不安C]</span>");
+			tx = replaceAll(tx,"[友好C]","<span class=\"fav_counter\">[不安C]</span>");
 
 			t += "<p>" + tx + "</p>";
 		}
