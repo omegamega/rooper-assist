@@ -21,7 +21,7 @@ var roles = [
 		skill		: [
 				{
 					timing	: 'turnend',
-					text	: "【任意：ターン終了】同一エリアのキーパーソンに[暗躍C]が2つ以上→<span class=\"skill_killing\">キーパーソンを死亡</span>させる",
+					text	: "【任意：ターン終了】同一エリアのキーパーソンに[暗躍C]が2つ以上→<span class=\"skill_killer\">キーパーソンを死亡</span>させる",
 				},
 				{
 					timing	: 'turnend',
@@ -55,7 +55,7 @@ var roles = [
 				},
 				{
 					timing	: 'turnend',
-					text	: "【任意：ターン終了】同一エリアのキャラクターに[暗躍C]が3つ以上→その<span class=\"skill_killing\">キャラクターを死亡</span>させる",
+					text	: "【任意：ターン終了】同一エリアのキャラクターに[暗躍C]が3つ以上→その<span class=\"skill_killer\">キャラクターを死亡</span>させる",
 				},
 			],
 		friendship	: 'ignore',
@@ -128,7 +128,7 @@ var roles = [
 		skill		:　[
 				{
 					timing	: 'turnend',
-					text	: "【強制：ターン終了】このキャラクターと同一エリアにあるキャラクターが一人だけ→その<span class=\"skill_killing\">キャラクターを死亡</span>させる",
+					text	: "【強制：ターン終了】このキャラクターと同一エリアにあるキャラクターが一人だけ→その<span class=\"skill_killer\">キャラクターを死亡</span>させる",
 				},
 			],
 		friendship	: 'normal',
@@ -296,7 +296,7 @@ var accidents = [
 		effect	: [
 				{
 					timing	: '',
-					text	: "犯人と同じエリアにいる犯人以外の<span class=\"skill_killing\">キャラクター1人を死亡</span>させる",
+					text	: "犯人と同じエリアにいる犯人以外の<span class=\"skill_killer\">キャラクター1人を死亡</span>させる",
 				},
 			],
 	},
@@ -314,7 +314,7 @@ var accidents = [
 		effect	: [
 				{
 					timing	: '',
-					text	: "病院に[暗躍C]が1つ以上→病院にいる<span class=\"skill_killing\">すべてのキャラクターを死亡</span>させる",
+					text	: "病院に[暗躍C]が1つ以上→病院にいる<span class=\"skill_killer\">すべてのキャラクターを死亡</span>させる",
 				},
 				{
 					timing	: '',

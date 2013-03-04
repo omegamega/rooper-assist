@@ -240,7 +240,7 @@ encodeScenarioToUrl = function() {
 	$('#assist_url').val(url);
 	
 	// pushStateしておく
-	/* 復元時に動作不良してしまうのでなんとかする
+	/* TODO:復元時に動作不良してしまうのでなんとかする
 	if(window.history.current != url) {
 		window.history.replaceState(null,null,url);
 	}*/
@@ -275,8 +275,12 @@ var init = function() {
 	
 	// ルールフォーカス処理
 	$('.focus_button').click(function(){
-		$('span.skill_writer, span.skill_turnend, span.skill_terminator').removeClass('skill_focused');
-		$('span.skill_' + $(this).val()).addClass('skill_focused');
+		if($('span.skill_' + $(this).val()).hasClass('skill_focused') == true) {
+			$('span.skill_writer, span.skill_turnend, span.skill_terminator, span.skill_killer').removeClass('skill_focused');
+		}else{
+			$('span.skill_writer, span.skill_turnend, span.skill_terminator, span.skill_killer').removeClass('skill_focused');
+			$('span.skill_' + $(this).val()).addClass('skill_focused');
+		}
 	});
 	
 	// 編集/完了
@@ -321,6 +325,7 @@ var init = function() {
 				}
 			}
 		}
+		$('#complete_button').click();
 	}else{
 		$('.loop_selector').val(4);
 		$('.day_selector').val(7).change();
