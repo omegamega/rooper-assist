@@ -1,17 +1,12 @@
-
-var ROLE_LIMIT_NOLIMIT = 999;
-
 var roles = [
 	{
 		name 		: "パーソン",
-		alias		: "person",
 		skill		: [],
 		friendship	: 'normal',
-		limit		: ROLE_LIMIT_NOLIMIT,
+		limit		: 99,
 	},
 	{
 		name 		: "キーパーソン",
-		alias		: "keyperson",
 		skill		: [
 				{
 					timing	: 'passive',
@@ -19,15 +14,14 @@ var roles = [
 				},
 			],
 		friendship	: 'normal',
-		limit		: ROLE_LIMIT_NOLIMIT,
+		limit		: 99,
 	},
 	{
 		name		: "キラー",
-		alias		: "killer",
 		skill		: [
 				{
 					timing	: 'turnend',
-					text	: "【任意：ターン終了】同一エリアのキーパーソンに[暗躍C]が2つ以上→<span class=\"skill_terminator\">キーパーソンを死亡</span>させる",
+					text	: "【任意：ターン終了】同一エリアのキーパーソンに[暗躍C]が2つ以上→<span class=\"skill_killing\">キーパーソンを死亡</span>させる",
 				},
 				{
 					timing	: 'turnend',
@@ -35,11 +29,10 @@ var roles = [
 				},
 			],
 		friendship	: 'ignore',
-		limit		: ROLE_LIMIT_NOLIMIT,
+		limit		: 99,
 	},
 	{
 		name		: "クロマク",
-		alias		: "kuromaku",
 		skill		:　[
 				{
 					timing	: 'writer',
@@ -47,11 +40,10 @@ var roles = [
 				},
 			],
 		friendship	: 'ignore',
-		limit		: ROLE_LIMIT_NOLIMIT,
+		limit		: 99,
 	},
 	{
 		name		: "アンサツシャ",
-		alias		: "ansatsusya",
 		skill		:　[
 				{
 					timing	: 'turnend',
@@ -63,15 +55,14 @@ var roles = [
 				},
 				{
 					timing	: 'turnend',
-					text	: "【任意：ターン終了】同一エリアのキャラクターに[暗躍C]が3つ以上→そのキャラクターを死亡させる",
+					text	: "【任意：ターン終了】同一エリアのキャラクターに[暗躍C]が3つ以上→その<span class=\"skill_killing\">キャラクターを死亡</span>させる",
 				},
 			],
 		friendship	: 'ignore',
-		limit		: ROLE_LIMIT_NOLIMIT,
+		limit		: 99,
 	},
 	{
 		name		: "アクリョウツキ",
-		alias		: "akuryoutuki",
 		skill		:　[
 				{
 					timing	: 'passive',
@@ -83,22 +74,20 @@ var roles = [
 				},
 			],
 		friendship	: 'normal',
-		limit		: ROLE_LIMIT_NOLIMIT,
+		limit		: 99,
 	},
 	{
 		name		: "ウイッチ",
-		alias		: "witch",
 		skill		:　[],
 		friendship	: 'reject',
-		limit		: ROLE_LIMIT_NOLIMIT,
+		limit		: 99,
 	},
 	{
 		name		: "フレンド",
-		alias		: "friend",
 		skill		:　[
 				{
 					timing	: 'loopend',
-					text	: "【敗北条件：ループ終了時】このキャラクターが死亡している場合、このキャラクターの役職を公開し、<span class=\"skill_terminator\">主人公は敗北</span>する",
+					text	: "【敗北：ループ終了時】このキャラクターが死亡している場合、このキャラクターの役職を公開し、<span class=\"skill_terminator\">主人公は敗北</span>する",
 				},
 				{
 					timing	: 'loopstart',
@@ -110,7 +99,6 @@ var roles = [
 	},
 	{
 		name		: "メインラバーズ",
-		alias		: "mainlovers",
 		skill		:　[
 				{
 					timing	: 'passive',
@@ -122,11 +110,10 @@ var roles = [
 				},
 			],
 		friendship	: 'normal',
-		limit		: ROLE_LIMIT_NOLIMIT,
+		limit		: 99,
 	},
 	{
 		name		: "ラバーズ",
-		alias		: "lovers",
 		skill		:　[
 				{
 					timing	: 'passive',
@@ -134,34 +121,31 @@ var roles = [
 				},
 			],
 		friendship	: 'normal',
-		limit		: ROLE_LIMIT_NOLIMIT,
+		limit		: 99,
 	},
 	{
 		name		: "シリアルキラー",
-		alias		: "serialkiller",
 		skill		:　[
 				{
 					timing	: 'turnend',
-					text	: "【強制：ターン終了】このキャラクターと同一エリアにあるキャラクターが一人だけ→そのキャラクターを死亡させる",
+					text	: "【強制：ターン終了】このキャラクターと同一エリアにあるキャラクターが一人だけ→その<span class=\"skill_killing\">キャラクターを死亡</span>させる",
 				},
 			],
 		friendship	: 'normal',
-		limit		: ROLE_LIMIT_NOLIMIT,
+		limit		: 99,
 	},
 	{
 		name		: "マイナス",
-		alias		: "minus",
 		skill		:　[],
 		friendship	: 'ignore',
-		limit		: ROLE_LIMIT_NOLIMIT,
+		limit		: 99,
 	},
 	{
 		name		: "ミスリーダー",
-		alias		: "missleader",
 		skill		:　[
 				{
 					timing	: 'writer',
-					text	: "【任意：脚本家】同一エリアのキャラクターに[不安C]を1つ置く",
+					text	: "【任意：脚本家能力】同一エリアのキャラクターに[不安C]を1つ置く",
 				},
 			],
 		friendship	: 'normal',
@@ -175,9 +159,9 @@ var rule_y = [
 		additional	: [
 		] ,
 		roles		: {
-			keyperson		: 1,
-			killer			: 1,
-			kuromaku		: 1,
+			"キーパーソン"		: 1,
+			"キラー"			: 1,
+			"クロマク"			: 1,
 		},
 	},
 	{
@@ -185,12 +169,12 @@ var rule_y = [
 		additional 	: [	
 				{
 					timing	: 'loopend',
-					text	: "【敗北条件：ループ終了】神社に[暗躍C]が2つ以上ある場合、主人公は<span class=\"skill_terminator\">敗北</span>する",
+					text	: "【敗北：ループ終了】神社に[暗躍C]が2つ以上ある場合、主人公は<span class=\"skill_terminator\">敗北</span>する",
 				},
 			] ,
 		roles		: {
-			kuromaku		: 1,
-			akuryoutuki		: 1,
+			"クロマク"			: 1,
+			"アクリョウツキ"		: 1,
 		},
 	},
 	{
@@ -202,11 +186,11 @@ var rule_y = [
 				},
 				{
 					timing	: 'loopend',
-					text	: "【敗北条件：ループ終了】キーパーソーンに[暗躍C]が2つ以上ある場合、主人公は<span class=\"skill_terminator\">敗北</span>する",
+					text	: "【敗北：ループ終了】キーパーソーンに[暗躍C]が2つ以上ある場合、主人公は<span class=\"skill_terminator\">敗北</span>する",
 				},
 			] ,
 		roles		: {
-			keyperson		: 1,
+			"キーパーソン"		: 1,
 		},
 	},
 	{
@@ -214,8 +198,8 @@ var rule_y = [
 		additional 	: [	
 			] ,
 		roles		: {
-			ansatsusya		: 1,
-			akuryoutuki		: 1,
+			"アンサツシャ"		: 1,
+			"アクリョウツキ"		: 1,
 		},
 	},
 	{
@@ -223,11 +207,11 @@ var rule_y = [
 		additional 	: [	
 				{
 					timing	: 'loopend',
-					text	: "【敗北条件：ループ終了】ウイッチの初期エリアに[暗躍C]が2つ以上ある場合、主人公は<span class=\"skill_terminator\">敗北</span>する",
+					text	: "【敗北：ループ終了】ウイッチの初期エリアに[暗躍C]が2つ以上ある場合、主人公は<span class=\"skill_terminator\">敗北</span>する",
 				},
 			] ,
 		roles		: {
-			witch			: 1,
+			"ウィッチ"			: 1,
 		},
 	},
 ];
@@ -237,16 +221,16 @@ var rule_x = [
 		name		: "友情グループ" ,
 		additional	: [],
 		roles		: {
-			friend			: 2,
+			"フレンド"			: 2,
 		},
 	},
 	{
 		name		: "恋愛模様" ,
 		additional	: [],
 		roles		: {
-			mainlovers		: 1,
-			lovers			: 1,
-			missleader		: 1,
+			"メインラバーズ"	: 1,
+			"ラバーズ"		: 1,
+			"ミスリーダー"		: 1,
 		},
 	},
 	{
@@ -258,7 +242,7 @@ var rule_x = [
 				},
 			] ,
 		roles		: {
-			missleader		: 1,
+			"ミスリーダー"		: 1,
 		},
 	},
 	{
@@ -266,7 +250,7 @@ var rule_x = [
 		additional 	: [	
 				{
 					timing	: 'loopstart',
-					text	: "【強制：ループ開始時】ひとつ前のループ終了時に[友好C]の置かれていた全キャラクターに[不安C]を2つ置く",
+					text	: "【強制：ループ開始】ひとつ前のループ終了時に[友好C]の置かれていた全キャラクターに[不安C]を2つ置く",
 				},
 			] ,
 		roles		: {},
@@ -275,17 +259,17 @@ var rule_x = [
 		name		: "マイナス13" ,
 		additional	: [],
 		roles		: {
-			friend			: 1,
-			minus			: 2,
-			missleader		: 1,
+			"フレンド"			: 1,
+			"マイナス"			: 2,
+			"ミスリーダー"		: 1,
 		},
 	},
 	{
 		name		: "潜む殺人鬼" ,
 		additional	: [],
 		roles		: {
-			friend			: 1,
-			serialkiller	: 1,
+			"フレンド"			: 1,
+			"シリアルキラー"	: 1,
 		},
 	},
 	{
@@ -297,7 +281,7 @@ var rule_x = [
 				},
 			] ,
 		roles		: {
-			missleader		: 1,
+			"ミスリーダー"		: 1,
 		},
 	},
 ];
@@ -312,7 +296,7 @@ var accidents = [
 		effect	: [
 				{
 					timing	: '',
-					text	: "犯人と同じエリアにいる犯人以外のキャラクター1人を死亡させる",
+					text	: "犯人と同じエリアにいる犯人以外の<span class=\"skill_killing\">キャラクター1人を死亡</span>させる",
 				},
 			],
 	},
@@ -330,7 +314,7 @@ var accidents = [
 		effect	: [
 				{
 					timing	: '',
-					text	: "病院に[暗躍C]が1つ以上→病院にいるすべてのキャラクターを死亡させる",
+					text	: "病院に[暗躍C]が1つ以上→病院にいる<span class=\"skill_killing\">すべてのキャラクターを死亡</span>させる",
 				},
 				{
 					timing	: '',
@@ -384,6 +368,21 @@ var accidents = [
 (function(){
 	roles_reverse = [];
 	for(var i in roles) {
-		roles_reverse[roles[i].alias] = i;
+		roles_reverse[roles[i].name] = i;
+	}
+	
+	rule_x_reverse = [];
+	for(var i in rule_x) {
+		rule_x_reverse[rule_x[i].name] = i;
+	}
+	
+	rule_y_reverse = [];
+	for(var i in rule_y) {
+		rule_y_reverse[rule_y[i].name] = i;
+	}
+	
+	accidents_reverse = [];
+	for(var i in accidents) {
+		accidents_reverse[accidents[i].name] = i;
 	}
 })();
