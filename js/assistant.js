@@ -112,6 +112,21 @@ role_number = {};
 updateRoleSkill = function() {
 	for(var i in npcs) {
 		$('.role_skill.role_' + i).html(decorateSkill(roles[$('.role_selector.role_' + i).val()].skill));
+		
+		var attr_str = '';
+		var friendship = roles[$('.role_selector.role_' + i).val()].friendship;
+		switch(friendship) {
+			case 'ignore':
+				attr_str += '<span class="red">無視</span>';
+				break;
+			case 'reject':
+				attr_str += '<span class="blue">絶無</span>';
+				break;
+			default:
+				attr_str += '<span class="gray">友好</span>';
+				break;
+		}
+		$('.role_attr.role_' + i).html(attr_str);
 	};
 }
 
@@ -123,6 +138,7 @@ createRoleTable = function() {
 		var line = '<tr class="' + ['even','odd'][(j++) % 2] + '">'
 			+ '<td>' + npcs[i].name + '</td>'
 			+ '<td><select class="role_selector role_' + i + '"></select></td>'
+			+ '<td><span class="role_attr role_' + i + '"></span></td>'
 			+ '<td><span class="role_skill role_' + i + '"></span></td>'
 			+ '</tr>';
 		$('#role_table > tbody').append(line);
