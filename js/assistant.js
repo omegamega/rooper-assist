@@ -329,8 +329,8 @@ var init = function() {
 		$('input#scenario_name').val(data['scenario']);
 		
 		for(var i=0;i<npcs.length;i++) {
-			var npc_name = npcs[i].name;
-			$('select.role_selector.role_' + i).val(roles_reverse[data[npc_name]]).change();
+			var npc_alias = npcs[i].alias;
+			$('select.role_selector.role_' + i).val(roles_reverse[data[npc_alias]]).change();
 		}
 		for(var i=1;i<=data['day'];i++) {
 			var key = 'event' + i;
