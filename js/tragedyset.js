@@ -1,12 +1,15 @@
+var tragedy_name = "BasicTradegy";
 var roles = [
 	{
 		name 		: "パーソン",
+		alias		: "person",
 		skill		: [],
 		friendship	: 'normal',
 		limit		: 99,
 	},
 	{
 		name 		: "キーパーソン",
+		alias		: "keyperson",
 		skill		: [
 				{
 					timing	: 'passive',
@@ -18,6 +21,7 @@ var roles = [
 	},
 	{
 		name		: "キラー",
+		alias		: "killer",
 		skill		: [
 				{
 					timing	: 'turnend',
@@ -33,6 +37,7 @@ var roles = [
 	},
 	{
 		name		: "クロマク",
+		alias		: "kuromaku",
 		skill		:　[
 				{
 					timing	: 'writer',
@@ -44,6 +49,7 @@ var roles = [
 	},
 	{
 		name		: "アンサツシャ",
+		alias		: "ansatu",
 		skill		:　[
 				{
 					timing	: 'turnend',
@@ -63,6 +69,7 @@ var roles = [
 	},
 	{
 		name		: "アクリョウツキ",
+		alias		: "akuryou",
 		skill		:　[
 				{
 					timing	: 'passive',
@@ -78,12 +85,14 @@ var roles = [
 	},
 	{
 		name		: "ウイッチ",
+		alias		: "witch",
 		skill		:　[],
 		friendship	: 'reject',
 		limit		: 99,
 	},
 	{
 		name		: "フレンド",
+		alias		: "friend",
 		skill		:　[
 				{
 					timing	: 'loopend',
@@ -99,6 +108,7 @@ var roles = [
 	},
 	{
 		name		: "メインラバーズ",
+		alias		: "mainlovers",
 		skill		:　[
 				{
 					timing	: 'passive',
@@ -114,6 +124,7 @@ var roles = [
 	},
 	{
 		name		: "ラバーズ",
+		alias		: "lovers",
 		skill		:　[
 				{
 					timing	: 'passive',
@@ -125,6 +136,7 @@ var roles = [
 	},
 	{
 		name		: "シリアルキラー",
+		alias		: "serial",
 		skill		:　[
 				{
 					timing	: 'turnend',
@@ -136,12 +148,14 @@ var roles = [
 	},
 	{
 		name		: "マイナス",
+		alias		: "minus",
 		skill		:　[],
 		friendship	: 'ignore',
 		limit		: 99,
 	},
 	{
 		name		: "ミスリーダー",
+		alias		: "missleader",
 		skill		:　[
 				{
 					timing	: 'writer',
@@ -156,6 +170,7 @@ var roles = [
 var rule_y = [
 	{
 		name		: "殺人計画" , 
+		alias		: "murder_plan",
 		additional	: [
 		] ,
 		roles		: {
@@ -166,6 +181,7 @@ var rule_y = [
 	},
 	{
 		name 		: "悪霊の封印" ,
+		alias		: "evil_spirit",
 		additional 	: [	
 				{
 					timing	: 'loopend',
@@ -179,6 +195,7 @@ var rule_y = [
 	},
 	{
 		name 		: "僕と契約しようよ！" ,
+		alias		: "contract_me",
 		additional 	: [	
 				{
 					timing	: 'passive',
@@ -195,6 +212,7 @@ var rule_y = [
 	},
 	{
 		name 		: "主人公殺人計画" ,
+		alias		: "hero_murder",
 		additional 	: [	
 			] ,
 		roles		: {
@@ -204,6 +222,7 @@ var rule_y = [
 	},
 	{
 		name 		: "巨大時限爆弾X" ,
+		alias		: "bomb_x",
 		additional 	: [	
 				{
 					timing	: 'loopend',
@@ -219,6 +238,7 @@ var rule_y = [
 var rule_x = [
 	{
 		name		: "友情グループ" ,
+		alias		: "friendship",
 		additional	: [],
 		roles		: {
 			"フレンド"			: 2,
@@ -226,6 +246,7 @@ var rule_x = [
 	},
 	{
 		name		: "恋愛模様" ,
+		alias		: "lovestory",
 		additional	: [],
 		roles		: {
 			"メインラバーズ"	: 1,
@@ -235,6 +256,7 @@ var rule_x = [
 	},
 	{
 		name		: "不穏な噂" ,
+		alias		: "bad_rumor",
 		additional 	: [	
 				{
 					timing	: 'writer',
@@ -247,6 +269,7 @@ var rule_x = [
 	},
 	{
 		name		: "因果の糸" ,
+		alias		: "fatal_string",
 		additional 	: [	
 				{
 					timing	: 'loopstart',
@@ -257,6 +280,7 @@ var rule_x = [
 	},
 	{
 		name		: "マイナス13" ,
+		alias		: "minus13",
 		additional	: [],
 		roles		: {
 			"フレンド"			: 1,
@@ -266,6 +290,7 @@ var rule_x = [
 	},
 	{
 		name		: "潜む殺人鬼" ,
+		alias		: "hidden_killer",
 		additional	: [],
 		roles		: {
 			"フレンド"			: 1,
@@ -273,7 +298,8 @@ var rule_x = [
 		},
 	},
 	{
-		name		: "妄想拡大ウイルス" ,
+		name		: "妄想拡大ウイルス",
+		alias		: "fanatic_virus",
 		additional 	: [	
 				{
 					timing	: 'passive',
@@ -289,10 +315,12 @@ var rule_x = [
 var accidents = [
 	{
 		name	: "-",
+		alias	: "",
 		effect	: [],
 	},
 	{
 		name	: "殺人事件",
+		alias	: "murder",
 		effect	: [
 				{
 					timing	: '',
@@ -302,6 +330,7 @@ var accidents = [
 	},
 	{
 		name	: "邪気の汚染",
+		alias	: "pollution",
 		effect	: [
 				{
 					timing	: '',
@@ -311,6 +340,7 @@ var accidents = [
 	},
 	{
 		name	: "病院の事件",
+		alias	: "hospital",
 		effect	: [
 				{
 					timing	: '',
@@ -324,6 +354,7 @@ var accidents = [
 	},
 	{
 		name	: "自殺",
+		alias	: "suicide",
 		effect	: [
 				{
 					timing	: '',
@@ -333,6 +364,7 @@ var accidents = [
 	},
 	{
 		name	: "不安拡大",
+		alias	: "expand_anxiety",
 		effect	: [
 				{
 					timing	: '',
@@ -342,6 +374,7 @@ var accidents = [
 	},
 	{
 		name	: "別離",
+		alias	: "separation",
 		effect	: [
 				{
 					timing	: '',
@@ -351,14 +384,15 @@ var accidents = [
 	},
 	{
 		name	: "暴露",
+		alias	: "reveal",
 		effect	: [
 				{
 					timing	: '',
-					text	: "【選択】犯人と同じエリアにいるキャラクターから[友好C]を2つまで取り除く(割り振り可)",
+					text	: "【選択】犯人と同じエリアにいるキャラクターから[友好C]を2つまで取り除く(2人に割り振ってよい)",
 				},
 				{
 					timing	: '',
-					text	: "【選択】犯人と同じエリアにいるキャラクターに[友好C]を2つまで置く(割り振り可)",
+					text	: "【選択】犯人と同じエリアにいるキャラクターに[友好C]を2つまで置く(2人に割り振ってよい)",
 				},
 			],
 	},
@@ -368,21 +402,21 @@ var accidents = [
 (function(){
 	roles_reverse = [];
 	for(var i in roles) {
-		roles_reverse[roles[i].name] = i;
+		roles_reverse[roles[i].alias] = i;
 	}
 	
 	rule_x_reverse = [];
 	for(var i in rule_x) {
-		rule_x_reverse[rule_x[i].name] = i;
+		rule_x_reverse[rule_x[i].alias] = i;
 	}
 	
 	rule_y_reverse = [];
 	for(var i in rule_y) {
-		rule_y_reverse[rule_y[i].name] = i;
+		rule_y_reverse[rule_y[i].alias] = i;
 	}
 	
 	accidents_reverse = [];
 	for(var i in accidents) {
-		accidents_reverse[accidents[i].name] = i;
+		accidents_reverse[accidents[i].alias] = i;
 	}
 })();

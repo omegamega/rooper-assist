@@ -228,22 +228,23 @@ decodeUrlParam = function() {
 encodeScenarioToUrl = function() {
 	var str = location.search.split("?");
 	var param = {
+		set			: tragedy_name,
 		scenario	: $('input#scenario_name').val(),
 		loop		: $('select.loop_selector').val(),
 		day			: $('select.day_selector').val(),
-		rule_y		: rule_y[$('select.rule_y_selector').val()].name,
-		rule_x1		: rule_x[$('select.rule_x1_selector').val()].name,
-		rule_x2		: rule_x[$('select.rule_x2_selector').val()].name,
+		rule_y		: rule_y[$('select.rule_y_selector').val()].alias,
+		rule_x1		: rule_x[$('select.rule_x1_selector').val()].alias,
+		rule_x2		: rule_x[$('select.rule_x2_selector').val()].alias,
 	};
 	
 	for(var i in npcs) {
-		param[npcs[i].name] = roles[$('select.role_selector.role_' + i).val()].name;
+		param[npcs[i].alias] = roles[$('select.role_selector.role_' + i).val()].alias;
 	}
 	for(var i=1;i<=$('select.day_selector').val();i++) {
 		if($('select.accident_selector.day_'+i).val() != 0) {
-			var key = 'day' + i;
-			var value = accidents[$('select.accident_selector.day_'+i).val()].name
-				+ CRIMINAL_SEPARATOR + npcs[$('select.accident_criminal_selector.day_'+i).val()].name;
+			var key = 'event' + i;
+			var value = accidents[$('select.accident_selector.day_'+i).val()].alias
+				+ CRIMINAL_SEPARATOR + npcs[$('select.accident_criminal_selector.day_'+i).val()].alias;
 			if(param[key] == undefined) {
 				param[key] = value;
 			}else{
@@ -319,6 +320,7 @@ var init = function() {
 	var data = decodeUrlParam();
 	if(data != null) {
 		// シナリオデータっぽいなら復元する
+		// TODO: data['set'] 惨劇セットを切り替える
 		$('select.loop_selector').val(data['loop']).change();
 		$('select.day_selector').val(data['day']).change();
 		$('select.rule_y_selector').val(rule_y_reverse[data['rule_y']]).change();
@@ -331,7 +333,7 @@ var init = function() {
 			$('select.role_selector.role_' + i).val(roles_reverse[data[npc_name]]).change();
 		}
 		for(var i=1;i<=data['day'];i++) {
-			var key = 'day' + i;
+			var key = 'event' + i;
 			if(data[key] != undefined) {
 				var d = data[key].split(GLOBAL_SEPARATOR);
 				for(var j=0;j<d.length;j++) {
@@ -343,7 +345,7 @@ var init = function() {
 		}
 		$('#complete_button').click();
 	}else{
-		$('.loop_selector').val(4);
-		$('.day_selector').val(7).change();
+		$('.loop_selector').val(3);
+		$('.day_selector').val(5).change();
 	}
 }
