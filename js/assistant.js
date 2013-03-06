@@ -12,7 +12,7 @@ decorateSkill = function(skills) {
 			tx = replaceAll(tx,"】","】</span>");
 			tx = replaceAll(tx,"[暗躍C]","<span class=\"bad_counter\">[暗躍C]</span>");
 			tx = replaceAll(tx,"[不安C]","<span class=\"anxiety_counter\">[不安C]</span>");
-			tx = replaceAll(tx,"[友好C]","<span class=\"fav_counter\">[不安C]</span>");
+			tx = replaceAll(tx,"[友好C]","<span class=\"fav_counter\">[友好C]</span>");
 
 			t += "<p>" + tx + "</p>";
 		}
@@ -42,6 +42,13 @@ implode = function(glue, val) {
 	return result;
 }
 
+htmlEscape = function(s){
+	s=s.replace(/&/g,'&amp;');
+	s=s.replace(/>/g,'&gt;');
+	s=s.replace(/</g,'&lt;');
+	return s;
+}
+
 // 役職の人数チェックをする
 updateRoleCount = function(){
 	// ルールX,Yから役職人数を算出
@@ -60,7 +67,12 @@ role_number = {};
 			+ getRoleNum(rule_x, $('.rule_x2_selector').val() ,roles[i].name);
 	}
 	
-	// TODO:上限付き役職チェック
+	// 上限人数超えてたら丸める
+	for(var i in roles) {
+		if(role_number[i] > roles[i].limit) { 
+			role_number[i] = roles[i].limit;
+		}
+	}
 	
 	// 役職テーブルの状態を見て、過不足を算出する
 	for(var i in npcs) {
@@ -184,10 +196,7 @@ updateAccidentTable = function() {
 		$('.accident_selector').append('<option value=' + i + '>' + accidents[i].name + '</option>');
 	}
 	$('.accident_selector').change(updateAccidentEffect).change();
-	$('.accident_selector, .accident_criminal_selector').change(function(){
-		updateRoleCount();
-		encodeScenarioToUrl();
-	}).change();
+	$('.accident_selector, .accident_criminal_selector').change(updateRoleCount).change();
 }
 
 updateRuleAdditional = function() {
@@ -253,16 +262,21 @@ encodeScenarioToUrl = function() {
 		}
 	}
 
-	var url = createUrlWithParam(location.href.split("?")[0] , param);
-	$('#assist_url').val(url);
+	return createUrlWithParam(location.href.split("?")[0] , param);
+}
+
+switchViewToEditMode = function(){
+	$('.play_mode').hide();
+	$('.edit_mode').show();
+	$('select, #scenario_name').attr('disabled',null);
+}
+switchViewToPlayMode = function(){
+	$('.play_mode').show();
+	$('.edit_mode').hide();
+	$('select, #scenario_name').attr('disabled','1');
 	
-	// pushStateしておく
-	/* TODO:復元時に動作不良してしまうのでなんとかする
-	if(window.history.current != url) {
-		window.history.replaceState(null,null,url);
-	}*/
-	return param;
-	
+	var title = ($('#scenario_name').val() == '') ? "惨劇AssistanT" : (htmlEscape($('#scenario_name').val()) + " - 惨劇AssistanT");
+	document.title = title;
 }
 	
 var init = function() {
@@ -288,10 +302,8 @@ var init = function() {
 	$('.rule_y_selector,.rule_x1_selector,.rule_x2_selector').change(updateRuleAdditional).change();
 	$('.rule_y_selector,.rule_x1_selector,.rule_x2_selector').change(updateRoleCount).change();
 	
-	$('input#scenario_name').change(encodeScenarioToUrl);
-	
 	// ルールフォーカス処理
-	$('.focus_button').click(function(){
+	$('button.focus_button').click(function(){
 		if($('span.skill_' + $(this).val()).hasClass('skill_focused') == true) {
 			$('span.skill_writer, span.skill_turnend, span.skill_terminator, span.skill_killer').removeClass('skill_focused');
 		}else{
@@ -299,22 +311,29 @@ var init = function() {
 			$('span.skill_' + $(this).val()).addClass('skill_focused');
 		}
 	});
+	// キーボードショートカット操作
+	document.onkeydown = function(e){
+		keychar = String.fromCharCode(e.keyCode).toUpperCase(); 
+		if(keychar == 'Z') $('button.focus_button[value=writer]').click();
+		if(keychar == 'X') $('button.focus_button[value=turnend]').click();
+		if(keychar == 'C') $('button.focus_button[value=terminator]').click();
+		if(keychar == 'V') $('button.focus_button[value=killer]').click();
+	};
 	
 	// 編集/完了
 	$('#edit_button').click(function() {
-		$('.play_mode').hide();
-		$('.edit_mode').show();
-		$('select, #scenario_name').attr('disabled',null);
-	}).click();
-
-	$('#complete_button').click(function(){		
-		$('.play_mode').show();
-		$('.edit_mode').hide();
-		$('select, #scenario_name').attr('disabled','1');
+		switchViewToEditMode();
 	});
-	
-	$('.loop_selector, .day_selector, .rule_y_selector, .rule_x1_selector, .rule_x2_selector'
-	 + ', .role_selector, .accident_selector, .accident_criminal_selector').change(encodeScenarioToUrl);
+
+	$('#play_button').click(function(){		
+		switchViewToPlayMode();
+		var url = encodeScenarioToUrl();
+		$('#scenario_url').val(url);
+		
+		if(location.href != url) {
+			history.pushState(null, null, url);
+		}
+	});
 	
 	// URLパラムを読む
 	var data = decodeUrlParam();
@@ -343,9 +362,12 @@ var init = function() {
 				}
 			}
 		}
-		$('#complete_button').click();
+		
+		$('#scenario_url').val(location.href);
+		switchViewToPlayMode();
 	}else{
-		$('.loop_selector').val(3);
-		$('.day_selector').val(5).change();
+		$('.loop_selector').val(4);
+		$('.day_selector').val(7).change();
+		switchViewToEditMode();
 	}
 }

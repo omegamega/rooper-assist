@@ -31,9 +31,9 @@
 		span.skill_terminator	{}
 		span.skill_focused		{color:#eee; background-color:#e11; font-weight:bold;}
 		
-		span.anxiety_counter	{color:#414; background-color:#d8d;}
-		span.bad_counter		{color:#441; background-color:#dd8;}
-		span.fav_counter		{color:#144; background-color:#d4a;}
+		span.anxiety_counter	{color:#414; background-color:#a8e;}
+		span.bad_counter		{color:#441; background-color:#dd2;}
+		span.fav_counter		{color:#144; background-color:#e6a;}
 		.role_skill p, .accident_effect p, .rule_additional p				{padding:0px; spacing:0px; margin:0px;}
 		
 		.control_menu			{width:100%;}
@@ -46,13 +46,16 @@
 			-moz-border-radius: 5px;
 			border-radius: 5px;
 		}
+		
+		button.focus_button		{padding-top:8px;	padding-bottom:8px;}
 	</style>
 	<title>惨劇AssistanT</title>
 <body>
 
 <div style="padding-top:8px; padding-bottom:8px; text-align:center;
 	background: -moz-linear-gradient(top, #888, #111);
-    background: -webkit-gradient(linear, left top, left bottom, from(#888), to(#111));">
+    background: -webkit-gradient(linear, left top, left bottom, from(#888), to(#111));
+	background-color: #111;">
 	<div style="margin-left:auto; margin-right:auto;">
 		<span style="font-weight:bold; color:#eee;";>惨劇AssistanT(α版)</span>
 	</div>
@@ -176,31 +179,38 @@
 		<tr>
 			<td>
 				<span class="edit_mode">
-					<p><button type="button" id="complete_button">完了</button></p>
-					<p>
-					シナリオURL:
-					<input type="input" id="assist_url"/>
-					</p>
+					<p><button type="button" id="play_button">完了</button></p>
 				</span>
 				<span class="play_mode">
 					<p>
-					<button type="button" id="edit_button">編集</button>
+					<button type="button" id="edit_button">編集</button> シナリオURL:
+					<input type="input" id="scenario_url"/>
 					</p>
-				</span>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<span class="play_mode">
-				<button type="button" class="focus_button" value="writer">脚本家フェイズ能力</button>
-				<button type="button" class="focus_button" value="turnend">ターン終了フェイズ能力</button>
-				<button type="button" class="focus_button" value="terminator">敗北させる能力</button>
-				<button type="button" class="focus_button" value="killer">殺害する能力</button>
 				</span>
 			</td>
 		</tr>
 	</tbody>
 </table>
+
+<span class="play_mode">
+<table class="control_menu focus_button">
+	<thead>
+		<tr>
+			<th>能力をハイライトする</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				<button type="button" class="focus_button" value="writer">脚本家フェイズ能力(Z)</button>
+				<button type="button" class="focus_button" value="turnend">ターン終了フェイズ能力(X)</button>
+				<button type="button" class="focus_button" value="terminator">敗北させる能力(C)</button>
+				<button type="button" class="focus_button" value="killer">殺害する能力(V)</button>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</span>
 
 <table id="role_notice" class="control_menu edit_mode">
 	<thead>
