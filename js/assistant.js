@@ -311,6 +311,14 @@ var init = function() {
 			$('span.skill_' + $(this).val()).addClass('skill_focused');
 		}
 	});
+	// キーボードショートカット操作
+	document.onkeydown = function(e){
+		keychar = String.fromCharCode(e.keyCode).toUpperCase(); 
+		if(keychar == 'Z') $('button.focus_button[value=writer]').click();
+		if(keychar == 'X') $('button.focus_button[value=turnend]').click();
+		if(keychar == 'C') $('button.focus_button[value=terminator]').click();
+		if(keychar == 'V') $('button.focus_button[value=killer]').click();
+	};
 	
 	// 編集/完了
 	$('#edit_button').click(function() {
