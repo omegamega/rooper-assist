@@ -36,7 +36,7 @@ var npcs = [
 	},
 	{
 		name	: "サラリーマン",
-		alias	: "worker",
+		alias	: "salaryman",
 		anxiety	: 2,
 		type	: "大人",
 		gender	: "男性",
