@@ -69,8 +69,8 @@ role_number = {};
 	
 	// 上限人数超えてたら丸める
 	for(var i in roles) {
-		if(role_number[i] > roles[i].limit) { 
-			role_number[i] = roles[i].limit;
+		if(role_number[roles[i].name] > roles[i].limit) { 
+			role_number[roles[i].name] = roles[i].limit;
 		}
 	}
 	
