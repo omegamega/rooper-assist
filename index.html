@@ -1,56 +1,70 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta name="viewport" content="initial-scale=1, width=device-width, minimum-scale=0.5">
+	<meta name="viewport" content="">
 	<script type="text/javascript" src="lib/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript" src="js/tragedyset.js"></script>
 	<script type="text/javascript" src="js/npc.js"></script>
 	<script type="text/javascript" src="js/assistant.js"></script>
-	</head>
-	<style>	
-		td,th					{font-size:80%;}
-		th						{background-color:#111;	color:#eee;}
-		th.label				{width:120px;}
-		th.name					{width:160px;}
-		th.number				{width:32px;}
-		th.auto					{width:auto;}
-		
-		.table					{width:100%;}
-		
-		tr.odd					{background-color:#eee;}
-		tr.even					{background-color:#fff;}
-		
-		span.red				{color:#f11; font-weight:bold;}
-		span.blue				{color:#11f; font-weight:bold;}
-		span.gray				{color:#ccc;}
-		
-		span.skill_passive		{font-weight:bold;}
-		span.skill_writer		{font-weight:bold;}
-		span.skill_turnend		{font-weight:bold;}
-		span.skill_loopend,span.skill_loopstart		{font-weight:bold;}
-		span.skill_terminator	{}
-		span.skill_focused		{color:#eee; background-color:#e11; font-weight:bold;}
-		
-		span.anxiety_counter	{color:#414; background-color:#a8e;}
-		span.bad_counter		{color:#441; background-color:#dd2;}
-		span.fav_counter		{color:#144; background-color:#e6a;}
-		.role_skill p, .accident_effect p, .rule_additional p				{padding:0px; spacing:0px; margin:0px;}
-		
-		.control_menu			{width:100%;}
-		
-		div#control_panel		{
-			padding: 8px;
-			border: 1px solid #f0f0f0;
-			border-bottom: 2px solid #ccc;
-			-webkit-border-radius: 5px;
-			-moz-border-radius: 5px;
-			border-radius: 5px;
-		}
-		
-		button.focus_button		{padding-top:8px;	padding-bottom:8px;}
-	</style>
-	<title>惨劇AssistanT</title>
+	<script type="text/javascript">
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-39101288-1']);
+	  _gaq.push(['_trackPageview']);
+
+	  (function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+
+	</script>
+</head>
+<style>	
+	td,th					{font-size:100%;}
+	th						{background-color:#111;	color:#eee;}
+	th.label				{width:120px;}
+	th.name					{width:160px;}
+	th.number				{width:32px;}
+	th.auto					{width:auto;}
+	
+	.table					{width:100%;}
+	
+	tr.odd					{background-color:#eee;}
+	tr.even					{background-color:#fff;}
+	
+	span.red				{color:#f11; font-weight:bold;}
+	span.blue				{color:#11f; font-weight:bold;}
+	span.gray				{color:#ccc;}
+	
+	span.skill_passive		{font-weight:bold;}
+	span.skill_writer		{font-weight:bold;}
+	span.skill_turnend		{font-weight:bold;}
+	span.skill_loopend,span.skill_loopstart		{font-weight:bold;}
+	span.skill_terminator	{}
+	span.skill_focused		{color:#eee; background-color:#e11; font-weight:bold;}
+	
+	span.anxiety_counter	{color:#414; background-color:#a8e;}
+	span.bad_counter		{color:#441; background-color:#dd2;}
+	span.fav_counter		{color:#144; background-color:#e6a;}
+	.role_skill p, .accident_effect p, .rule_additional p				{padding:0px; spacing:0px; margin:0px;}
+	
+	.control_menu			{width:100%;}
+	
+	div#control_panel		{
+		padding: 8px;
+		border: 1px solid #f0f0f0;
+		border-bottom: 2px solid #ccc;
+		-webkit-border-radius: 5px;
+		-moz-border-radius: 5px;
+		border-radius: 5px;
+	}
+	
+	button {padding-top:12px; padding-bottom:12px; -webkit-appearance:none;}
+	button.focus_button span{padding-top:12px; padding-bottom:12px;}
+</style>
+<title>惨劇AssistanT</title>	
 <body>
+
 
 <div style="padding-top:8px; padding-bottom:8px; text-align:center;
 	background: -moz-linear-gradient(top, #888, #111);
@@ -202,10 +216,10 @@
 	<tbody>
 		<tr>
 			<td>
-				<button type="button" class="focus_button" value="writer">脚本家フェイズ能力(Z)</button>
-				<button type="button" class="focus_button" value="turnend">ターン終了フェイズ能力(X)</button>
-				<button type="button" class="focus_button" value="terminator">敗北させる能力(C)</button>
-				<button type="button" class="focus_button" value="killer">殺害する能力(V)</button>
+				<button type="button" class="focus_button" value="writer"><span>脚本家フェイズ能力(Z)</span></button>
+				<button type="button" class="focus_button" value="turnend"><span>ターン終了フェイズ能力(X)</span></button>
+				<button type="button" class="focus_button" value="terminator"><span>敗北させる能力(C)</span></button>
+				<button type="button" class="focus_button" value="killer"><span>殺害する能力(V)</span></button>
 			</td>
 		</tr>
 	</tbody>

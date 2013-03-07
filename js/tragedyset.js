@@ -358,7 +358,7 @@ var accidents = [
 		effect	: [
 				{
 					timing	: '',
-					text	: "犯人は死亡する",
+					text	: "<span class=\"skill_killer\">犯人は死亡</span>する",
 				},
 			],
 	},
