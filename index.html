@@ -1,7 +1,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta name="viewport" content="initial-scale=1, width=device-width, minimum-scale=0.5">
+	<meta name="viewport" content="">
 	<script type="text/javascript" src="lib/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript" src="js/tragedyset.js"></script>
 	<script type="text/javascript" src="js/npc.js"></script>
@@ -20,7 +20,7 @@
 	</script>
 </head>
 <style>	
-	td,th					{font-size:80%;}
+	td,th					{font-size:100%;}
 	th						{background-color:#111;	color:#eee;}
 	th.label				{width:120px;}
 	th.name					{width:160px;}
@@ -59,7 +59,8 @@
 		border-radius: 5px;
 	}
 	
-	button.focus_button		{padding-top:8px;	padding-bottom:8px;}
+	button {padding-top:12px; padding-bottom:12px; -webkit-appearance:none;}
+	button.focus_button span{padding-top:12px; padding-bottom:12px;}
 </style>
 <title>惨劇AssistanT</title>	
 <body>
@@ -215,10 +216,10 @@
 	<tbody>
 		<tr>
 			<td>
-				<button type="button" class="focus_button" value="writer">脚本家フェイズ能力(Z)</button>
-				<button type="button" class="focus_button" value="turnend">ターン終了フェイズ能力(X)</button>
-				<button type="button" class="focus_button" value="terminator">敗北させる能力(C)</button>
-				<button type="button" class="focus_button" value="killer">殺害する能力(V)</button>
+				<button type="button" class="focus_button" value="writer"><span>脚本家フェイズ能力(Z)</span></button>
+				<button type="button" class="focus_button" value="turnend"><span>ターン終了フェイズ能力(X)</span></button>
+				<button type="button" class="focus_button" value="terminator"><span>敗北させる能力(C)</span></button>
+				<button type="button" class="focus_button" value="killer"><span>殺害する能力(V)</span></button>
 			</td>
 		</tr>
 	</tbody>
