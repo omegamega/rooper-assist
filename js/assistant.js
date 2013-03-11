@@ -84,7 +84,7 @@ role_number = {};
 		notices.push("<span class=\"red\">ルールX1とX2が重複</span>");
 	}
 	for(var i in role_number) {
-		if(i == 'パーソン') continue;
+		if(i == 'パーソン' || i == '-') continue;
 		
 		if(role_number[i] > 0) {
 			notices.push("<span class=\"red\">" + i + "</span>" + role_number[i] + "人不足");
@@ -280,6 +280,8 @@ switchViewToPlayMode = function(){
 }
 	
 var init = function() {
+	// 惨劇セットロード
+	loadTragedySet();
 	// ループ回数
 	for(var i=1;i<9;i++) {
 		$('.loop_selector,.day_selector').append('<option value=' + i + '>' + i + '</option>');
