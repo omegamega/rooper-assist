@@ -11,7 +11,7 @@ loadTragedySet = function(name){
 			break;
 	};
 	
-	// 惨劇セットで共通ものを追加
+	// 惨劇セット間で共通ものを追加
 	roles.unshift(
 			{
 				name		: "-",

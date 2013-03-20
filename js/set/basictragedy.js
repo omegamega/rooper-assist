@@ -1,3 +1,4 @@
+// 基本セット : BasicTragedy
 Set_BasicTragedy = {
 	load : function(){
 		tragedy_name = "BasicTragedy";

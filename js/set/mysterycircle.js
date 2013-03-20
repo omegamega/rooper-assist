@@ -1,3 +1,4 @@
+// 拡張セット1 : MysteryCircle
 Set_MysteryCircle = {
 	load : function(){
 		tragedy_name = "MysteryCircle";
@@ -110,7 +111,7 @@ Set_MysteryCircle = {
 				skill		:　[
 						{
 							timing	: 'writer',
-							text	: "【任意：脚本家能力】このキャラクターに[暗躍C]か[友好C]を1つ置く",
+							text	: "【任意：脚本家能力】このキャラクターに[暗躍C]か[不安C]を1つ置く",
 						},
 					],
 				friendship	: "reject",

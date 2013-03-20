@@ -1,4 +1,6 @@
+// 拡張セット2 : HauntedStage
 Set_HauntedStage = {
+// TODO:実装する
 	load : function(){
 		tragedy_name = "HauntedStage";
 		roles = [

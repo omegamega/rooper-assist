@@ -200,6 +200,7 @@ updateAccidentTable = function() {
 		$('.accident_selector').append('<option value=' + i + '>' + accidents[i].name + '</option>');
 	}
 	$('.accident_selector').change(updateAccidentEffect).change();
+	$('.accident_selector, .accident_criminal_selector').change(updateRoleCount).change();	
 }
 
 updateRuleAdditional = function() {
@@ -313,10 +314,13 @@ var init = function() {
 		// ルールフォーカス処理
 		$('button.focus_button').click(function(){
 			if($('span.skill_' + $(this).val()).hasClass('skill_focused') == true) {
-				$('span.skill_writer, span.skill_turnend, span.skill_terminator, span.skill_killer').removeClass('skill_focused');
+				$('span.skill_writer, span.skill_turnend, span.skill_terminator, span.skill_killer, span.skill_event').removeClass('skill_focused');
+				$('button.focus_button > span > span').removeClass('skill_focused');
 			}else{
-				$('span.skill_writer, span.skill_turnend, span.skill_terminator, span.skill_killer').removeClass('skill_focused');
+				$('span.skill_writer, span.skill_turnend, span.skill_terminator, span.skill_killer, span.skill_event').removeClass('skill_focused');
+				$('button.focus_button > span > span').removeClass('skill_focused');
 				$('span.skill_' + $(this).val()).addClass('skill_focused');
+				$('span > span', $(this)).addClass('skill_focused');
 			}
 		});
 		// イベント復元
@@ -332,10 +336,11 @@ var init = function() {
 	// キーボードショートカット操作
 	document.onkeydown = function(e){
 		keychar = String.fromCharCode(e.keyCode).toUpperCase(); 
-		if(keychar == 'Z') $('button.focus_button[value=writer]').click();
-		if(keychar == 'X') $('button.focus_button[value=turnend]').click();
-		if(keychar == 'C') $('button.focus_button[value=terminator]').click();
-		if(keychar == 'V') $('button.focus_button[value=killer]').click();
+		if(keychar == 'A') $('button.focus_button[value=writer]').click();
+		if(keychar == 'S') $('button.focus_button[value=turnend]').click();
+		if(keychar == 'D') $('button.focus_button[value=event]').click();
+		if(keychar == 'Z') $('button.focus_button[value=terminator]').click();
+		if(keychar == 'X') $('button.focus_button[value=killer]').click();
 	};
 	
 	// 編集/完了
@@ -352,12 +357,15 @@ var init = function() {
 			history.pushState(null, null, url);
 		}
 	});
-	
+/*　TODO:短縮URLに対応したらやる	
+	$('#tweet_button').click(function(){
+		window.open('https://twitter.com/intent/tweet?text=' + encodeURI($('#scenario_url').val()));
+	});
+*/	
 	// URLパラムを読む
 	var data = decodeUrlParam();
 	if(data != null) {
 		// シナリオデータっぽいなら復元する
-		// TODO: data['set'] 惨劇セットを切り替える
 		$('select.set_selector').val(data['set']).change();
 		$('select.loop_selector').val(data['loop']).change();
 		$('select.day_selector').val(data['day']).change();
