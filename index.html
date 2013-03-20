@@ -6,6 +6,9 @@
 	<script type="text/javascript" src="js/tragedyset.js"></script>
 	<script type="text/javascript" src="js/npc.js"></script>
 	<script type="text/javascript" src="js/assistant.js"></script>
+	<script type="text/javascript" src="js/set/basictragedy.js"></script>
+	<script type="text/javascript" src="js/set/mysterycircle.js"></script>
+	<script type="text/javascript" src="js/set/hauntedstage.js"></script>
 	<script type="text/javascript">
 	  var _gaq = _gaq || [];
 	  _gaq.push(['_setAccount', 'UA-39101288-1']);
@@ -35,10 +38,9 @@
 	span.red				{color:#f11; font-weight:bold;}
 	span.blue				{color:#11f; font-weight:bold;}
 	span.gray				{color:#ccc;}
+	span.bold				{font-weight:bold;}
 	
-	span.skill_passive		{font-weight:bold;}
-	span.skill_writer		{font-weight:bold;}
-	span.skill_turnend		{font-weight:bold;}
+	span.skill_passive, span.skill_writer, span.skill_turnend, span.skill_event		{font-weight:bold;}
 	span.skill_loopend,span.skill_loopstart		{font-weight:bold;}
 	span.skill_terminator	{}
 	span.skill_focused		{color:#eee; background-color:#e11; font-weight:bold;}
@@ -61,6 +63,7 @@
 	
 	button {padding-top:12px; padding-bottom:12px; -webkit-appearance:none;}
 	button.focus_button span{padding-top:12px; padding-bottom:12px;}
+	button.focus_button span span{padding:0px;}
 </style>
 <title>惨劇AssistanT</title>	
 <body>
@@ -71,7 +74,7 @@
     background: -webkit-gradient(linear, left top, left bottom, from(#888), to(#111));
 	background-color: #111;">
 	<div style="margin-left:auto; margin-right:auto;">
-		<span style="font-weight:bold; color:#eee;";>惨劇AssistanT(α版)</span>
+		<span style="font-weight:bold; color:#eee;";>惨劇AssistanT(β版)</span>
 	</div>
 </div>
 
@@ -93,7 +96,11 @@
 				<select class="day_selector"></select>
 			</td>
 			<td>
-				BasicTragedy
+				<select class="set_selector">
+					<option value="BasicTragedy">BasicTragedy</option>
+					<option value="MysteryCircle">MysteryCircle</option>
+					<!-- <option value="HauntedStage">HauntedStage</option> -->
+				</select>
 			</td>
 			<td>
 				<input type="input" width="100%" id="scenario_name"/>
@@ -162,7 +169,7 @@
 <table id="accident_table" class="table">
 	<thead>
 		<tr>
-			<th class="number">日数</th>
+			<th class="number">日</th>
 			<th class="label">事件</th>
 			<th class="label">犯人</th>
 			<th class="auto">事件効果</th>
@@ -174,8 +181,10 @@
 
 <div style="height:160px; position:relative; width:50%;">
 	<div style="position:absolute; bottom:2em; font-size:50%;">
-	<p>作った人:おめが（　゜ワ゜）ノ(@Omegamega) 使い方、質問とかは<a href="https://github.com/omegamega/rooper-assist">このへん</a>とかTwitterで聞け。</p>
-	<p><a href="http://bakafire.main.jp/rooper/sr_top.htm">惨劇RoopeR</a>はBakaFire Partyさん作のボードゲームです。</p>
+	<p>作った人:おめが（　゜ワ゜）ノ(<a href="https://twitter.com/Omegamega">@Omegamega</a>)</p>
+	<p>使い方、質問、要望とかは<a href="https://github.com/omegamega/rooper-assist">このへん</a>とか
+	<a href="https://twitter.com/search?q=%23%E6%83%A8%E5%8A%87AssistanT">Twitter</a>で聞こう。PC(Chrome)/iPad/Androidで動作を想定</p>
+	<p><a href="http://bakafire.main.jp/rooper/sr_top.htm">惨劇RoopeR</a>はBakaFire Partyさん作のボードゲームです。ここのデータは公式のサマリーシートを参考にしています。</p>
 	</div>
 </div>
 
@@ -199,6 +208,7 @@
 					<p>
 					<button type="button" id="edit_button">編集</button> シナリオURL:
 					<input type="input" id="scenario_url"/>
+					<!-- <button type="button" id="tweet_button">ツイート</button> -->
 					</p>
 				</span>
 			</td>
@@ -216,10 +226,11 @@
 	<tbody>
 		<tr>
 			<td>
-				<button type="button" class="focus_button" value="writer"><span>脚本家フェイズ能力(Z)</span></button>
-				<button type="button" class="focus_button" value="turnend"><span>ターン終了フェイズ能力(X)</span></button>
-				<button type="button" class="focus_button" value="terminator"><span>敗北させる能力(C)</span></button>
-				<button type="button" class="focus_button" value="killer"><span>殺害する能力(V)</span></button>
+				<button type="button" class="focus_button" value="writer"><span><span>脚本家フェイズ能力(A)</span></span></button>
+				<button type="button" class="focus_button" value="turnend"><span><span>ターン終了フェイズ能力(S)</span></span></button>
+				<button type="button" class="focus_button" value="event"><span><span>事件フェイズ能力(D)</span></span></button>
+				<button type="button" class="focus_button" value="terminator"><span><span>敗北させる能力(Z)</span></span></button>
+				<button type="button" class="focus_button" value="killer"><span><span>殺害する能力(X)</span></span></button>
 			</td>
 		</tr>
 	</tbody>
