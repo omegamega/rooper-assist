@@ -8,8 +8,12 @@ decorateSkill = function(skills) {
 		for(var i=0;i<skills.length;i++) {
 			var s = skills[i];
 			var tx = s.text;
-			tx = replaceAll(tx,"【","<span class=\"skill_" + s.timing +"\">【");
-			tx = replaceAll(tx,"】","】</span>");
+			if(s.timing != undefined) {
+				tx = replaceAll(tx,"【","<span class=\"skill_" + s.timing +"\">【");
+				tx = replaceAll(tx,"】","】</span>");
+			}
+			tx = replaceAll(tx,"＜","<span class=\"bold\">＜");
+			tx = replaceAll(tx,"＞","＞</span>");
 			tx = replaceAll(tx,"[暗躍C]","<span class=\"bad_counter\">[暗躍C]</span>");
 			tx = replaceAll(tx,"[不安C]","<span class=\"anxiety_counter\">[不安C]</span>");
 			tx = replaceAll(tx,"[友好C]","<span class=\"fav_counter\">[友好C]</span>");
@@ -52,8 +56,9 @@ htmlEscape = function(s){
 // 役職の人数チェックをする
 updateRoleCount = function(){
 	// ルールX,Yから役職人数を算出
-role_number = {};
+	role_number = {};
 	for(var i in roles) {
+	
 		role_number[roles[i].name] = 0;
 	}
 	
@@ -69,7 +74,7 @@ role_number = {};
 	
 	// 上限人数超えてたら丸める
 	for(var i in roles) {
-		if(role_number[roles[i].name] > roles[i].limit) { 
+		if(roles[i].limit != undefined && role_number[roles[i].name] > roles[i].limit) { 
 			role_number[roles[i].name] = roles[i].limit;
 		}
 	}
@@ -160,7 +165,6 @@ createRoleTable = function() {
 	}
 	
 	$('.role_selector').change(updateRoleSkill).change();
-	$('.role_selector').change(updateRoleCount).change();
 }
 
 // 事件効果を更新する
@@ -196,7 +200,6 @@ updateAccidentTable = function() {
 		$('.accident_selector').append('<option value=' + i + '>' + accidents[i].name + '</option>');
 	}
 	$('.accident_selector').change(updateAccidentEffect).change();
-	$('.accident_selector, .accident_criminal_selector').change(updateRoleCount).change();
 }
 
 updateRuleAdditional = function() {
@@ -281,38 +284,51 @@ switchViewToPlayMode = function(){
 	
 var init = function() {
 	// 惨劇セットロード
-	loadTragedySet();
+	$('.set_selector').change(function(){
+		// イベント削除
+		$('.rule_y_selector, .rule_x1_selector, .rule_x2_selector, .role_selector, .accident_selector, .accident_criminal_selector')
+			.unbind('change');
+
+		loadTragedySet($(this).val());
+		createRoleTable();
+		
+		// ルールY
+		$('.rule_y_selector > option').remove();
+		for(var i=0;i<rule_y.length;i++) {
+			var r = rule_y[i];
+			$('.rule_y_selector').append('<option value=' + i + '>' + r.name + '</option>');
+		}
+		
+		// ルールX
+		$('.rule_x1_selector > option').remove();
+		$('.rule_x2_selector > option').remove();
+		for(var i=0;i<rule_x.length;i++) {
+			var r = rule_x[i];
+			$('.rule_x1_selector,.rule_x2_selector').append('<option value=' + i + '>' + r.name + '</option>');
+		}
+		
+		$('.day_selector').change(updateAccidentTable).change();
+		$('.rule_y_selector,.rule_x1_selector,.rule_x2_selector').change(updateRuleAdditional).change();
+		
+		// ルールフォーカス処理
+		$('button.focus_button').click(function(){
+			if($('span.skill_' + $(this).val()).hasClass('skill_focused') == true) {
+				$('span.skill_writer, span.skill_turnend, span.skill_terminator, span.skill_killer').removeClass('skill_focused');
+			}else{
+				$('span.skill_writer, span.skill_turnend, span.skill_terminator, span.skill_killer').removeClass('skill_focused');
+				$('span.skill_' + $(this).val()).addClass('skill_focused');
+			}
+		});
+		// イベント復元
+		$('.rule_y_selector, .rule_x1_selector, .rule_x2_selector, .role_selector, .accident_selector, .accident_criminal_selector')
+			.change(updateRoleCount).change();
+		updateRoleCount();
+	});
+	
 	// ループ回数
 	for(var i=1;i<9;i++) {
 		$('.loop_selector,.day_selector').append('<option value=' + i + '>' + i + '</option>');
 	}
-	
-	// ルールY
-	for(var i=0;i<rule_y.length;i++) {
-		var r = rule_y[i];
-		$('.rule_y_selector').append('<option value=' + i + '>' + r.name + '</option>');
-	}
-	
-	// ルールX
-	for(var i=0;i<rule_x.length;i++) {
-		var r = rule_x[i];
-		$('.rule_x1_selector,.rule_x2_selector').append('<option value=' + i + '>' + r.name + '</option>');
-	}
-	
-	createRoleTable();
-	$('.day_selector').change(updateAccidentTable).change();
-	$('.rule_y_selector,.rule_x1_selector,.rule_x2_selector').change(updateRuleAdditional).change();
-	$('.rule_y_selector,.rule_x1_selector,.rule_x2_selector').change(updateRoleCount).change();
-	
-	// ルールフォーカス処理
-	$('button.focus_button').click(function(){
-		if($('span.skill_' + $(this).val()).hasClass('skill_focused') == true) {
-			$('span.skill_writer, span.skill_turnend, span.skill_terminator, span.skill_killer').removeClass('skill_focused');
-		}else{
-			$('span.skill_writer, span.skill_turnend, span.skill_terminator, span.skill_killer').removeClass('skill_focused');
-			$('span.skill_' + $(this).val()).addClass('skill_focused');
-		}
-	});
 	// キーボードショートカット操作
 	document.onkeydown = function(e){
 		keychar = String.fromCharCode(e.keyCode).toUpperCase(); 
@@ -342,6 +358,7 @@ var init = function() {
 	if(data != null) {
 		// シナリオデータっぽいなら復元する
 		// TODO: data['set'] 惨劇セットを切り替える
+		$('select.set_selector').val(data['set']).change();
 		$('select.loop_selector').val(data['loop']).change();
 		$('select.day_selector').val(data['day']).change();
 		$('select.rule_y_selector').val(rule_y_reverse[data['rule_y']]).change();
@@ -370,6 +387,7 @@ var init = function() {
 	}else{
 		$('.loop_selector').val(4);
 		$('.day_selector').val(7).change();
+		$('select.set_selector').change();
 		switchViewToEditMode();
 	}
 }

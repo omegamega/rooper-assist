@@ -6,6 +6,9 @@
 	<script type="text/javascript" src="js/tragedyset.js"></script>
 	<script type="text/javascript" src="js/npc.js"></script>
 	<script type="text/javascript" src="js/assistant.js"></script>
+	<script type="text/javascript" src="js/set/basictragedy.js"></script>
+	<script type="text/javascript" src="js/set/mysterycircle.js"></script>
+	<script type="text/javascript" src="js/set/hauntedstage.js"></script>
 	<script type="text/javascript">
 	  var _gaq = _gaq || [];
 	  _gaq.push(['_setAccount', 'UA-39101288-1']);
@@ -35,10 +38,9 @@
 	span.red				{color:#f11; font-weight:bold;}
 	span.blue				{color:#11f; font-weight:bold;}
 	span.gray				{color:#ccc;}
+	span.bold				{font-weight:bold;}
 	
-	span.skill_passive		{font-weight:bold;}
-	span.skill_writer		{font-weight:bold;}
-	span.skill_turnend		{font-weight:bold;}
+	span.skill_passive, span.skill_writer, span.skill_turnend, span.skill_event		{font-weight:bold;}
 	span.skill_loopend,span.skill_loopstart		{font-weight:bold;}
 	span.skill_terminator	{}
 	span.skill_focused		{color:#eee; background-color:#e11; font-weight:bold;}
@@ -93,7 +95,11 @@
 				<select class="day_selector"></select>
 			</td>
 			<td>
-				BasicTragedy
+				<select class="set_selector">
+					<option value="BasicTragedy">BasicTragedy</option>
+					<option value="MysteryCircle">MysteryCircle</option>
+					<option value="HauntedStage">HauntedStage</option>
+				</select>
 			</td>
 			<td>
 				<input type="input" width="100%" id="scenario_name"/>
@@ -162,7 +168,7 @@
 <table id="accident_table" class="table">
 	<thead>
 		<tr>
-			<th class="number">日数</th>
+			<th class="number">日</th>
 			<th class="label">事件</th>
 			<th class="label">犯人</th>
 			<th class="auto">事件効果</th>
